@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/editText4"
-            android:hint="USERNAME"
+        <TextView
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,6 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.505" />
+
         <ImageView
             android:id="@+id/profile_photo"
             android:layout_width="120dp"
@@ -34,17 +34,36 @@
             android:layout_gravity="right"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <Button
+            android:id="@+id/VkButton"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/back"
+            android:gravity="center"
+            android:shadowColor="@color/colorBlack"
+            android:text="Войти с помощью ВКонтакте"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="88dp" />
+
+        <Button
+            android:id="@+id/sync_with_vk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/back"
+            android:text="Синхрон"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/back1"
-        android:id="@+id/change_profile_photo"
-        android:text="Сменить Фото" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,5 +81,6 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             />
+
     </LinearLayout>
 </LinearLayout>

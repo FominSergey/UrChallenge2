@@ -14,6 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKApiUser;
+import com.vk.sdk.api.model.VKList;
+
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -25,21 +37,45 @@ import java.io.InputStream;
 public class Desk3 extends Fragment {
     final static int REQUEST_CODE = 1337;
     private View inflate;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         inflate = inflater.inflate(R.layout.desk3, container, false);
-        Button change_profile_photo = (Button) inflate.findViewById(R.id.change_profile_photo);
-        change_profile_photo.setOnClickListener(new View.OnClickListener() {
+        Button vkbutton = inflate.findViewById(R.id.VkButton);
+
+        vkbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(getActivity(), VK.class);
+                startActivity(intent);
             }
         });
+
+            Button sync_with_vk = (Button) inflate.findViewById(R.id.sync_with_vk);
+            sync_with_vk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (DataBase.vk_permission) {
+                        VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.USER_ID, VK.vkAccessToken.userId));
+                        vkRequest.executeWithListener(new VKRequest.VKRequestListener() {
+                            @Override
+                            //Добавка Имени и Аватара пользователя из ВК.
+                            public void onComplete(VKResponse response) {
+                                VKApiUser vkApiUser = ((VKList<VKApiUser>) response.parsedModel).get(0);
+                                TextView textView = inflate.findViewById(R.id.profile_name);
+                                textView.setText(vkApiUser.first_name + " " + vkApiUser.last_name);
+                              //  ImageView imageView = inflate.findViewById(R.id.profile_photo);
+                              //  imageView.setImageBitmap();
+                                super.onComplete(response);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(), "Авторизуйтесь через ВКОНТАКТЕ", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         return inflate;
     }
 
@@ -47,7 +83,6 @@ public class Desk3 extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Log.i("chlen", "pizda");
             Uri uri = null;
             ImageView imageView = (ImageView)inflate.findViewById(R.id.profile_photo);
             uri = data.getData();

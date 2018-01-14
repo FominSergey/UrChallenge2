@@ -22,6 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+
 /**
  * Created by maximgran on 13.01.2018.
  */
@@ -46,6 +51,8 @@ public class MenuActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+       // VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.USER_ID, ))
     }
 
 
